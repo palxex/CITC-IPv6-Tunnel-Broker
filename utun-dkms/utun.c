@@ -40,7 +40,7 @@
 #include <linux/in.h>
 #include <linux/init.h>
 
-#include <asm/system.h>
+//#include <asm/system.h>
 #include <asm/uaccess.h>
 #include <asm/io.h>
 
@@ -122,7 +122,7 @@ static netdev_tx_t utun_xmit(struct sk_buff *skb, struct net_device *dev)
             skb_pull(skb, len);
             skb->protocol = htons(ETH_P_IPV6);
             skb->pkt_type = PACKET_HOST;
-            (skb_dst(skb))->hh = NULL;
+            //(skb_dst(skb))->hh = NULL;
             skb_reset_mac_header(skb);
             skb_reset_network_header(skb);
             skb_reset_transport_header(skb);
@@ -226,10 +226,10 @@ static int utun_set_mac_address(struct net_device *dev, void* addr)
 
 static const struct ethtool_ops utun_ethtool_ops = {
     .get_link        = always_on,
-    .set_tso         = ethtool_op_set_tso,
-    .get_tx_csum     = always_on,
-    .get_sg          = always_on,
-    .get_rx_csum     = always_on,
+    //.set_tso         = ethtool_op_set_tso,
+    //.get_tx_csum     = always_on,
+    //.get_sg          = always_on,
+    //.get_rx_csum     = always_on,
 };
 
 static int utun_dev_init(struct net_device *dev)
@@ -303,6 +303,14 @@ static void utun_setup(struct net_device *dev)
 
     dev->features          = NETIF_F_IP_CSUM | NETIF_F_NETNS_LOCAL;
     dev->ethtool_ops       = &utun_ethtool_ops;
+    dev->hw_features	   = NETIF_F_SG
+     //| NETIF_F_FRAGLIST
+     | NETIF_F_TSO | NETIF_F_TSO6
+     | NETIF_F_IP_CSUM|NETIF_F_IPV6_CSUM // NETIF_F_NO_CSUM
+     //| NETIF_F_HIGHDMA
+     //| NETIF_F_LLTX
+     //| NETIF_F_NETNS_LOCAL
+    ;
     dev->netdev_ops        = &utun_netdev_ops;
     dev->destructor        = utun_dev_free;
 }

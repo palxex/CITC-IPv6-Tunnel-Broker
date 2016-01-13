@@ -54,7 +54,7 @@ test_prereq:
 
 	@if [ -f /etc/debian_version ]; then \
             missing_packages=0; \
-            for i in linux-headers-`uname -r` gcc make dkms libmysqlclient-dev xtables-addons-common \
+            for i in gcc make dkms libmysqlclient-dev xtables-addons-common \
                      python-setuptools python-dev python-crypto python-cracklib mysql-server; do \
                 this_miss=`dpkg -s $$i >/dev/null 2>&1; echo $$?`; \
                 missing_packages=`expr $$missing_packages + $$this_miss`; \

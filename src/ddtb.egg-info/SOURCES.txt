@@ -62,8 +62,6 @@ src/management/hashstore/hashstoremanager.py
 src/management/static/background-rtl.jpg
 src/management/static/bullet.gif
 src/management/static/citc.css
-src/management/static/favicon.gif
-src/management/static/favicon.ico
 src/management/static/input_background.gif
 src/management/static/logo.jpg
 src/management/static/logo.png
